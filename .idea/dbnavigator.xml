@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
@@ -12,8 +12,8 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="f8cb19d1-583a-4543-9000-dd6e6a866073">
-      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[SELECT * FROM user]]></console>
+    <connection id="975bed21-d927-4f17-b606-aee2ce8035d4">
+      <console name="Connection" type="STANDARD" schema="students" session="Main"><![CDATA[SELECT * FROM user]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -28,6 +28,14 @@
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
   </component>
+  <component name="DBNavigator.Project.MethodExecutionManager">
+    <method-browser />
+    <execution-history>
+      <group-entries value="true" />
+      <execution-inputs />
+    </execution-history>
+    <argument-values-cache />
+  </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
     <filters />
@@ -37,7 +45,7 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="f8cb19d1-583a-4543-9000-dd6e6a866073" active="true" signed="true">
+      <connection id="975bed21-d927-4f17-b606-aee2ce8035d4" active="true" signed="true">
         <database>
           <name value="Connection" />
           <description value="" />
@@ -54,7 +62,7 @@
           <tns-folder value="" />
           <tns-profile value="" />
           <files>
-            <file path="$PROJECT_DIR$/seminar_3/app/instance/users.db" schema="main" />
+            <file path="$PROJECT_DIR$/seminar_3/app/instance/users.db" schema="students" />
           </files>
           <type value="NONE" />
           <user value="" />

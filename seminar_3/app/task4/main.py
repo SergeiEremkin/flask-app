@@ -4,7 +4,6 @@ from flask import Flask, request, render_template
 from flask_wtf import FlaskForm
 from flask_wtf.csrf import CSRFProtect
 import binascii
-
 from task4.forms import RegistrationForm
 from task4.models import db, User
 
@@ -27,6 +26,8 @@ def register():
         username = form.username.data
         email = form.email.data
         password = form.password.data
+        birthdate = form.birthdate.data
+        personal_data = form.personal_data.data
         dk = hashlib.pbkdf2_hmac(hash_name='sha256',
                                  password=bytes(password, 'utf-8'),
                                  salt=b'bad_salt',
@@ -40,7 +41,8 @@ def register():
             error_msg = 'Username or email already exists.'
             form.username.errors.append(error_msg)
             return render_template('register.html', form=form)
-        new_user = User(username=username, email=email, password=password)
+        new_user = User(username=username, email=email, birthdate=birthdate, password=password,
+                        personal_data=personal_data)
         db.session.add(new_user)
         db.session.commit()
 
