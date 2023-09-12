@@ -8,8 +8,8 @@ async def download(url):
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             image = await response.read()
-            filename = url.replace('https://', '').split('/')[-1]
-        with open(f'images/{filename}', "wb") as f:
+            filename = url.replace("https://", "").split("/")[-1]
+        with open(f"images/{filename}", "wb") as f:
             f.write(image)
             print(f"Downloaded {url} in {time.time() - start_time:.2f} seconds")
 
@@ -23,5 +23,5 @@ async def main():
 
 
 start_time = time.time()
-if __name__ == '__main__':
+if __name__ == "__main__":
     asyncio.run(main())
