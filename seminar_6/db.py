@@ -1,22 +1,45 @@
-import databases
-import sqlalchemy
-from sqlalchemy import create_engine
+from datetime import datetime
 
+import databases
+import sqlalchemy as sa
+from sqlalchemy import create_engine
 
 from settings import settings
 
 DATABASE_URL = settings.DATABASE_URL
 database = databases.Database(DATABASE_URL)
-metadata = sqlalchemy.MetaData()
+metadata = sa.MetaData()
 
-users = sqlalchemy.Table(
+users = sa.Table(
     "users",
     metadata,
-    sqlalchemy.Column("id", sqlalchemy.Integer,
-                      primary_key=True),
-    sqlalchemy.Column("username", sqlalchemy.String(32)),
-    sqlalchemy.Column("email", sqlalchemy.String(128)),
-    sqlalchemy.Column("password", sqlalchemy.String(128)),
+    sa.Column("id", sa.Integer,
+              primary_key=True),
+    sa.Column("username", sa.String(32)),
+    sa.Column("email", sa.String(128)),
+    sa.Column("password", sa.String(128)),
+)
+
+goods = sa.Table(
+    'goods',
+    metadata,
+    sa.Column("id", sa.Integer,
+              primary_key=True),
+    sa.Column("name", sa.String(32)),
+    sa.Column("description", sa.String(256)),
+    sa.Column("price", sa.Integer),
+)
+
+orders = sa.Table(
+    'orders',
+    metadata,
+    sa.Column("id", sa.Integer,
+              primary_key=True),
+    sa.Column("user_id", sa.Integer(), sa.ForeignKey("users.id"), nullable=False),
+    sa.Column("goods_id", sa.Integer(), sa.ForeignKey("goods.id"), nullable=False),
+    sa.Column("order_date", sa.String(64), nullable=False, default=datetime.now().strftime("%d/%m/%y, %H:%M:%S"),
+              onupdate=datetime.now().strftime("%d/%m/%y, %H:%M:%S")),
+    sa.Column("status", sa.String(64)),
 )
 
 engine = create_engine(

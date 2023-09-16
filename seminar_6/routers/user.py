@@ -1,6 +1,4 @@
 from fastapi import APIRouter, HTTPException
-from sqlalchemy import select
-
 from db import users, database
 from models.user import User, UserIn
 
@@ -8,7 +6,7 @@ router = APIRouter()
 
 
 @router.post("/fake_users/{count}")
-async def create_user(count: int):
+async def create_fake_user(count: int):
     for i in range(count):
         query = users.insert().values(username=f'user{i}',
                                       email=f'mail{i}@mail.ru',
@@ -25,6 +23,13 @@ async def create_user(user: UserIn):
     return {**user.dict(), "id": last_record_id}
 
 
+@router.put("/users/{user_id}", response_model=User)
+async def update_user(user_id: int, new_user: UserIn):
+    query = users.update().where(users.c.id == user_id).values(**new_user.dict())
+    await database.execute(query)
+    return {**new_user.dict(), "id": user_id}
+
+
 @router.get("/users/")
 async def read_users():
     query = users.select()
@@ -34,8 +39,6 @@ async def read_users():
 @router.get("/users/{user_id}", response_model=User)
 async def read_user(user_id: int):
     query = users.select().where(users.c.id == user_id)
-    if not query:
-        raise HTTPException(status_code=404, detail="User not found")
     return await database.fetch_one(query)
 
 
@@ -44,10 +47,3 @@ async def delete_user(user_id: int):
     query = users.delete().where(users.c.id == user_id)
     await database.execute(query)
     return {'message': 'User deleted'}
-
-
-# query = select(orders.c.id, orders.c.order_date, orders.c.status,
-#                    products.c.id.label('product_id'), products.c.title, products.c.description, products.c.price,
-#                    users.c.id.label('user_id'), users.c.name, users.c.surname, users.c.email, users.c.password).join(
-#         products).join(users)
-#     rows = await db.fetch_all(query)
